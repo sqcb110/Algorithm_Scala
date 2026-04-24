@@ -2,7 +2,7 @@ package scala
 
 import scala.collection.mutable.ArrayBuffer
 
-// 稀疏数组
+// 稀疏数组，创建和使用
 
 object Test01_SparseArray {
   def main(args: Array[String]): Unit = {

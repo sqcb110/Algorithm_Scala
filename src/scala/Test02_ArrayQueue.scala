@@ -2,7 +2,7 @@ package scala
 
 import scala.io.StdIn
 
-// 用数组实现队列
+// 用数组实现队列，一次性数组
 object Test02_ArrayQueue {
   def main(args: Array[String]): Unit = {
     // 初始化一个队列
