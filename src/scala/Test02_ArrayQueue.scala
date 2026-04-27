@@ -62,8 +62,8 @@ class ArrayQueue(arrMaxSize: Int) {
       println("队列已空")
       return
     }
-    arr(front) = 0
     front += 1
+    arr(front) = 0
   }
 
   // 显示队列的所有数据
