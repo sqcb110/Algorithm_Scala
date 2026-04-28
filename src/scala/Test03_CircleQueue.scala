@@ -1,11 +1,10 @@
 package scala
-
 import scala.io.StdIn
-
 // 环形队列
 // front，队头，默认值-1，只要取过数，队头就增加，第一次取数，增加为索引0
 // rear，队尾，默认值-1，只要入过队，队尾就增加，第一次入队，增加为索引0
-// first，第一个元素，默认值也是-1，只要
+// first，第一个元素，默认值也是-1。
+// 关键点：取数的时候，关心是不是数组剩下的最后一个元素；加数的时候，关心是不是空的。
 object Test03_CircleQueue {
   def main(args: Array[String]): Unit = {
     // 初始化一个数组
@@ -25,7 +24,7 @@ object Test03_CircleQueue {
           val n = StdIn.readInt()
           queue.addQueue(n)
         }
-        case "fetch" => queue.fetchQueue()
+        case "fetch" => println(queue.fetchQueue())
         case "exit" => System.exit(0)
       }
     }
@@ -33,12 +32,12 @@ object Test03_CircleQueue {
 }
 
 // 使用环形数组模拟队列
-class CircleQueue(n:Int){
+class CircleQueue(n: Int) {
   val maxSize = n
   val circleArray = new Array[Int](maxSize)
   var front = -1
   var first = -1
-  var rear  = -1
+  var rear = -1
 
   // 判断环形数组是否是空
   def isEmpty(): Boolean = {
@@ -53,28 +52,55 @@ class CircleQueue(n:Int){
   // 往环形数组里加元素
   def addQueue(e: Int): Unit = {
     // 若数组已满
-    if(isFull()){
+    if (isFull()) {
       println("数组已满")
     } else {
       rear = (rear + 1) % maxSize
       circleArray(rear) = e
+      if (front == first) { // 加元素前，数组是空的，这时候rear和first都需要移动。
+        first = (first + 1) % maxSize
+      }
     }
   }
 
   // 从环形数组取元素
   def fetchQueue(): Any = {
-    if(isEmpty()){
+    if (isEmpty()) {
       return new Exception("数组为空")
     } else {
-      if(first== maxSize - 1){
+      val tmp = circleArray(first)
+      circleArray(first) = 0
+      // 如果数组不只有一个元素
+      if (first != rear) {
         front = (front + 1) % maxSize
         first = (first + 1) % maxSize
-        circleArray(front)
+      } else {
+        //如果数组只有一个元素
+        first = (first - 1 + maxSize) % maxSize
+        front = first
+        rear  = first
       }
+      return tmp
     }
   }
 
   def showQueue(): Unit = {
-
+    printf("front为：%d：\n", front)
+    printf("first为：%d：\n", first)
+    printf("rear为：%d：\n", rear)
+    if (isEmpty()) {
+      println("数组为空")
+    } else if (first > rear) { // 如果头元素下标比尾元素下标大，说明跨周期了。
+      for (i <- first until maxSize) {
+        printf("下标为%d的元素为：%d\n", i, circleArray(i))
+      }
+      for (j <- 0 to rear) {
+        printf("下标为%d的元素为：%d\n", j, circleArray(j))
+      }
+    } else {
+      for (k <- first to rear) {
+        printf("下标为%d的元素为：%d\n", k, circleArray(k))
+      }
+    }
   }
 }
