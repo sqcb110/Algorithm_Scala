@@ -1,5 +1,7 @@
 package scala
 
+import scala.io.StdIn
+
 /*
 用栈实现计算器的效果
 1、一个数字栈，一个运算符栈。
@@ -12,10 +14,30 @@ package scala
  */
 object Test08_Calculator {
   def main(args: Array[String]): Unit = {
-
+    println("请输入表达式字符：")
+    val str = StdIn.readLine()
+¬
   }
 
-  def calculate(expression: String): Int = {
+  // 计算方法
+  def calculator(expression: String): Int = {
+    // 先准备两个栈，一个数栈，一个符号栈
+    val numStack = new StackNumOrOperator(6)
+    val optStack = new StackNumOrOperator(5)
+
+    // 把表达式拆成字符
+    val charArray = disassembleString(expression)
+    // 把字符放入两个栈
+    putCharIntoStack(charArray,numStack,optStack)
+  }
+
+  // 把表达式拆成字符
+  def disassembleString(expression: String): Array[Char] = {
+    expression.toCharArray
+  }
+
+  // 把字符放入两个栈
+  def putCharIntoStack(arr: Array[Char],stack1: StackNumOrOperator,stack2: StackNumOrOperator): Unit = {
 
   }
 }

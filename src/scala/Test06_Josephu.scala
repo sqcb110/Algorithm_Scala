@@ -39,7 +39,7 @@ class KidsGame(numKids: Int) {
       val kid = new Kid(i)
       if (i == 1) { // 第一个小孩
         firstKid = kid
-        firstKid.next = firstKid
+        firstKid.next = firstKid // 形成环形
         currentKid = firstKid
       } else {
         currentKid.next = kid
